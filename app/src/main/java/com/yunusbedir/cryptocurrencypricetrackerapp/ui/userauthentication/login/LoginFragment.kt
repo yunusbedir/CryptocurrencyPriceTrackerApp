@@ -1,14 +1,18 @@
-package com.yunusbedir.cryptocurrencypricetrackerapp.ui.login
+package com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.login
 
 import android.os.Bundle
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
+import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentLoginBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.UserAuthenticationViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.emailCheck
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.passwordCheck
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.showLongToast
@@ -18,8 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment(),
     View.OnClickListener {
 
-    private val loginFragmentViewModel: LoginFragmentViewModel by viewModels()
-
+    private val userAuthenticationViewModel: UserAuthenticationViewModel by hiltNavGraphViewModels(
+        navGraphId = R.id.user_authentication_graph
+    )
     private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
@@ -43,15 +48,15 @@ class LoginFragment : Fragment(),
     }
 
     private fun initObservers() {
-        loginFragmentViewModel.loginLiveData.observe(viewLifecycleOwner){
+        userAuthenticationViewModel.loginLiveData.observe(viewLifecycleOwner) {
 
         }
-        loginFragmentViewModel.screenStateLiveData.observe(viewLifecycleOwner){
-            when(it){
-                is ScreenState.ProgressState ->{
-                    if (it.visibility){
+        userAuthenticationViewModel.screenStateLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ScreenState.ProgressState -> {
+                    if (it.visibility) {
 
-                    }else{
+                    } else {
 
                     }
                 }
@@ -65,18 +70,26 @@ class LoginFragment : Fragment(),
     override fun onClick(v: View?) {
         when (v) {
             binding.forgotPasswordTextView -> {
-                // TODO: Navigate To ForgotPasswordFragment
+                var email = binding.userEmailTextInputEditText.text.toString()
+                if (requireContext().emailCheck(email).not())
+                    email = ""
+                val action = LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment(email)
+                findNavController().navigate(action)
             }
             binding.loginButton -> {
                 val email = binding.userEmailTextInputEditText.text.toString()
                 val password = binding.userPasswordTextInputEditText.text.toString()
 
                 if (requireContext().emailCheck(email) && requireContext().passwordCheck(password)) {
-                    loginFragmentViewModel.loginUser(email, password)
+                    userAuthenticationViewModel.loginUser(email, password)
                 }
             }
             binding.registerButton -> {
-                // TODO: Navigate To RegisterFragment
+                var email = binding.userEmailTextInputEditText.text.toString()
+                if (requireContext().emailCheck(email).not())
+                    email = ""
+                val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment(email)
+                findNavController().navigate(action)
             }
         }
     }

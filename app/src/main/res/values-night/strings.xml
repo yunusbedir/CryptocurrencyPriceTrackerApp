@@ -5,4 +5,5 @@
     <string name="login">Login</string>
     <string name="forget_password">Forget Password?</string>
     <string name="register_now">Register Now</string>
+    <string name="send_mail">Send mail</string>
 </resources>

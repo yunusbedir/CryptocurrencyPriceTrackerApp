@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/activity_main.xml" value="0.67" />
+        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/activity_main.xml" value="0.19129082426127528" />
+        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_forgot_password.xml" value="0.33" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_login.xml" value="0.340625" />
+        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_register.xml" value="0.25" />
       </map>
     </option>
   </component>
