@@ -2,7 +2,6 @@ package com.yunusbedir.cryptocurrencypricetrackerapp.data.local.dao
 
 import androidx.room.*
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.Coin
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CoinDao {

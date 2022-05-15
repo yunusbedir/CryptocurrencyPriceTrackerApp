@@ -3,15 +3,19 @@ package com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.CoinRepository
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.firebase.FirebaseRepository
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserAuthenticationViewModel @Inject constructor(
-    private val firebaseRepository: FirebaseRepository
+    private val firebaseRepository: FirebaseRepository,
+    private val coinRepository: CoinRepository
 ) : ViewModel() {
 
     private val _screenStateLiveData = MutableLiveData<Event<ScreenState>>()
@@ -30,8 +34,11 @@ class UserAuthenticationViewModel @Inject constructor(
         _screenStateLiveData.postValue(Event(ScreenState.ProgressState(true)))
         firebaseRepository.login(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
-                _loginLiveData.postValue(Event(true))
-                _screenStateLiveData.postValue(Event(ScreenState.ProgressState(false)))
+                viewModelScope.launch {
+                    coinRepository.syncCoins()
+                    _loginLiveData.postValue(Event(true))
+                    _screenStateLiveData.postValue(Event(ScreenState.ProgressState(false)))
+                }
             } else {
                 _screenStateLiveData.postValue(Event(ScreenState.ToastMessageState(it.exception?.message
                     ?: "Login failed!")))

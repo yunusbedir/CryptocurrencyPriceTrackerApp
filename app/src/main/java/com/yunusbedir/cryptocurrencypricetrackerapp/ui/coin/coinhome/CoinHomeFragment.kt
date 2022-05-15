@@ -38,7 +38,7 @@ class CoinHomeFragment : Fragment(),
         binding.coinListRecyclerView.adapter = coinListAdapter
         binding.coinSearchView.setOnQueryTextListener(this)
         initObserver()
-        coinViewModel.syncCoins()
+        coinViewModel.filterCoins("")
     }
 
     private fun initObserver() {

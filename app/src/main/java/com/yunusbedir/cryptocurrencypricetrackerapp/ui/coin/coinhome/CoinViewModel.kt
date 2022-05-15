@@ -19,18 +19,6 @@ class CoinViewModel @Inject constructor(
     private val _coinListLiveData = MutableLiveData<Event<List<Coin>>>()
     val coinListLiveData: LiveData<Event<List<Coin>>> = _coinListLiveData
 
-    fun syncCoins() {
-        viewModelScope.launch {
-            try {
-                coinRepository.syncCoins()
-                val coinList = coinRepository.getCoins()
-                _coinListLiveData.postValue(Event(coinList))
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
     fun filterCoins(search: String) {
         viewModelScope.launch {
             try {
