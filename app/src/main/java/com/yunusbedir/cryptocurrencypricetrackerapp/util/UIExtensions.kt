@@ -2,7 +2,9 @@ package com.yunusbedir.cryptocurrencypricetrackerapp.util
 
 import android.content.Context
 import android.util.Patterns
+import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 
 fun Context.showLongToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
@@ -25,4 +27,8 @@ fun Context.passwordCheck(password: String): Boolean {
         return false
     }
     return true
+}
+
+fun ImageView.loadImage(url: String) {
+    Glide.with(this).load(url).into(this)
 }

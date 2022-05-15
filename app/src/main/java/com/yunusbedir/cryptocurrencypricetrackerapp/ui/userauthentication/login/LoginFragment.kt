@@ -49,7 +49,9 @@ class LoginFragment : Fragment(),
 
     private fun initObservers() {
         userAuthenticationViewModel.loginLiveData.observe(viewLifecycleOwner) {
-
+            if (it) {
+                findNavController().navigate(R.id.action_global_coinHomeFragment)
+            }
         }
         userAuthenticationViewModel.screenStateLiveData.observe(viewLifecycleOwner) {
             when (it) {
@@ -73,7 +75,8 @@ class LoginFragment : Fragment(),
                 var email = binding.userEmailTextInputEditText.text.toString()
                 if (requireContext().emailCheck(email).not())
                     email = ""
-                val action = LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment(email)
+                val action =
+                    LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment(email)
                 findNavController().navigate(action)
             }
             binding.loginButton -> {

@@ -12,6 +12,7 @@
             android:id="@+id/loginFragment"
             android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.login.LoginFragment"
             android:label="fragment_login"
+            app:launchSingleTop="true"
             tools:layout="@layout/fragment_login">
             <action
                 android:id="@+id/action_loginFragment_to_registerFragment"
@@ -40,5 +41,15 @@
                 android:defaultValue=""
                 app:argType="string" />
         </fragment>
+        <action
+            android:id="@+id/action_global_coinHomeFragment"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"
+            app:destination="@id/coinHomeFragment" />
     </navigation>
+    <fragment
+        android:id="@+id/coinHomeFragment"
+        android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coinhome.CoinHomeFragment"
+        android:label="fragment_coin_home"
+        tools:layout="@layout/fragment_coin_home" />
 </navigation>

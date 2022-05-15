@@ -3,4 +3,9 @@
     <dimen name="margin24">24dp</dimen>
     <dimen name="padding24">24dp</dimen>
     <dimen name="margin8">8dp</dimen>
+    <dimen name="margin_card_view">4dp</dimen>
+    <dimen name="radius_card_view">8dp</dimen>
+    <dimen name="dimension_list_item_icon">75dp</dimen>
+    <dimen name="padding8">8dp</dimen>
+    <dimen name="elevation_list_item">4dp</dimen>
 </resources>
