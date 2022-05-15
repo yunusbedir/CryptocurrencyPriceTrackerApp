@@ -12,6 +12,7 @@ import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentRegisterBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.UserAuthenticationViewModel
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.emailCheck
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.passwordCheck
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.showLongToast
@@ -47,7 +48,7 @@ class RegisterFragment : Fragment(),
     }
 
     private fun initObservers() {
-        userAuthenticationViewModel.screenStateLiveData.observe(viewLifecycleOwner) {
+        userAuthenticationViewModel.screenStateLiveData.observe(viewLifecycleOwner, EventObserver{
             when (it) {
                 is ScreenState.ProgressState -> {
                     if (it.visibility) {
@@ -60,7 +61,7 @@ class RegisterFragment : Fragment(),
                     requireContext().showLongToast(it.message)
                 }
             }
-        }
+        })
     }
 
     override fun onClick(v: View?) {

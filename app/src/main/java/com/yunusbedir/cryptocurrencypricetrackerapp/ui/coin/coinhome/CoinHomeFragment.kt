@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.yunusbedir.cryptocurrencypricetrackerapp.callback.ListItemClickCallback
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.Coin
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentCoinHomeBinding
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,9 +42,9 @@ class CoinHomeFragment : Fragment(),
     }
 
     private fun initObserver() {
-        coinViewModel.coinListLiveData.observe(viewLifecycleOwner) {
+        coinViewModel.coinListLiveData.observe(viewLifecycleOwner, EventObserver {
             coinListAdapter.submitList(it as MutableList<Coin>?)
-        }
+        })
     }
 
     override fun onItemClick(item: Coin) {
