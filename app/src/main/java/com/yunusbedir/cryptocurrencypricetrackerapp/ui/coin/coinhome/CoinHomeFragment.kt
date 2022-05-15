@@ -9,7 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.yunusbedir.cryptocurrencypricetrackerapp.callback.ListItemClickCallback
-import com.yunusbedir.cryptocurrencypricetrackerapp.data.remote.model.Coin
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.Coin
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentCoinHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,10 +36,9 @@ class CoinHomeFragment : Fragment(),
         binding.coinListRecyclerView.adapter = coinListAdapter
         binding.coinSearchView.setOnQueryTextListener(this)
         initObserver()
-        coinViewModel.getCoinList()
+        coinViewModel.syncCoins()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun initObserver() {
         coinViewModel.coinListLiveData.observe(viewLifecycleOwner) {
             coinListAdapter.submitList(it as MutableList<Coin>?)
@@ -55,7 +54,9 @@ class CoinHomeFragment : Fragment(),
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        coinListAdapter.filter.filter(newText)
+        newText?.let {
+            coinViewModel.filterCoins(it)
+        }
         return false
     }
 }

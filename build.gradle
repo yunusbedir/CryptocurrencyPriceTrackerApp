@@ -9,6 +9,7 @@ buildscript {
         lifecycle_version = "2.4.1"
         google_services_version ="4.3.10"
         glide_version ="4.11.0"
+        room_version = "2.4.2"
     }
 
     repositories {

@@ -1,7 +1,7 @@
 package com.yunusbedir.cryptocurrencypricetrackerapp.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.yunusbedir.cryptocurrencypricetrackerapp.data.remote.model.Coin
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.Coin
 
 class GenericDiffUtil<T> : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
