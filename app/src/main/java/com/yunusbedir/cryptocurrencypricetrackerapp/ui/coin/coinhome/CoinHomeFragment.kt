@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.yunusbedir.cryptocurrencypricetrackerapp.callback.ListItemClickCallback
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.Coin
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentCoinHomeBinding
@@ -46,7 +47,11 @@ class CoinHomeFragment : Fragment(),
     }
 
     override fun onItemClick(item: Coin) {
-        //TODO : Navigate To CoinDetailFragment
+        val action = CoinHomeFragmentDirections.actionCoinHomeFragmentToCoinDetailFragment(
+            id = item.id,
+            title = item.name ?: item.symbol ?: "Coin"
+        )
+        findNavController().navigate(action)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

@@ -22,4 +22,8 @@ class CoinRepository @Inject constructor(
         val newSearch = "%$search%"
         coinDao.selectFilteredCoins(newSearch)
     }
+
+    suspend fun getCoinDetail(id: String) = withContext(Dispatchers.IO) {
+        coinGeckoService.getCoinDetail(id)
+    }
 }

@@ -51,5 +51,21 @@
         android:id="@+id/coinHomeFragment"
         android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coinhome.CoinHomeFragment"
         android:label="fragment_coin_home"
-        tools:layout="@layout/fragment_coin_home" />
+        tools:layout="@layout/fragment_coin_home" >
+        <action
+            android:id="@+id/action_coinHomeFragment_to_coinDetailFragment"
+            app:destination="@id/coinDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/coinDetailFragment"
+        android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coindetail.CoinDetailFragment"
+        android:label="fragment_coin_detail"
+        tools:layout="@layout/fragment_coin_detail" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 </navigation>
