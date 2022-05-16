@@ -43,6 +43,7 @@ class LoginFragment : BaseFragment(),
         ).forEach {
             it.setOnClickListener(this)
         }
+        userAuthenticationViewModel.autoLogin()
         initObservers()
     }
 

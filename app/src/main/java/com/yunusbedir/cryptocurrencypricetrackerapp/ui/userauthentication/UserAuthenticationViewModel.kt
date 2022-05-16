@@ -69,4 +69,10 @@ class UserAuthenticationViewModel @Inject constructor(
             }
         }
     }
+
+    fun autoLogin() {
+        if (firebaseRepository.getCurrentUser() != null) {
+            _loginLiveData.postValue(Event(true))
+        }
+    }
 }

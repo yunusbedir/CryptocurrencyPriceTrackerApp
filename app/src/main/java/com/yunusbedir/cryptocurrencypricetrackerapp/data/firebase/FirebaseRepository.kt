@@ -33,4 +33,7 @@ class FirebaseRepository @Inject constructor(
             firebaseFirestore.collection(COLLECTION_USERS).document(it.email.toString())
         }
 
+    fun getCurrentUser() =
+        firebaseAuth.currentUser
+
 }
