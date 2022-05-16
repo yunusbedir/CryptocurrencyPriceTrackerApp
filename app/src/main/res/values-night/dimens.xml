@@ -10,4 +10,5 @@
     <dimen name="elevation_list_item">4dp</dimen>
     <dimen name="text_margin">12dp</dimen>
     <dimen name="dimension_image_view">100dp</dimen>
+    <dimen name="dimension_image_small">32dp</dimen>
 </resources>

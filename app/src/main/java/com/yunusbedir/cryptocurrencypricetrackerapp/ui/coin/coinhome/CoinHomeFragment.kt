@@ -19,7 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CoinHomeFragment : BaseFragment(),
     ListItemClickCallback<Coin>,
-    SearchView.OnQueryTextListener {
+    SearchView.OnQueryTextListener,
+    View.OnClickListener {
 
     private val coinViewModel: CoinViewModel by viewModels()
 
@@ -38,6 +39,7 @@ class CoinHomeFragment : BaseFragment(),
         super.onViewCreated(view, savedInstanceState)
         binding.coinListRecyclerView.adapter = coinListAdapter
         binding.coinSearchView.setOnQueryTextListener(this)
+        binding.logoutButton.setOnClickListener(this)
         initObserver()
         coinViewModel.filterCoins("")
     }
@@ -45,6 +47,12 @@ class CoinHomeFragment : BaseFragment(),
     private fun initObserver() {
         coinViewModel.coinListLiveData.observe(viewLifecycleOwner, EventObserver {
             coinListAdapter.submitList(it as MutableList<Coin>?)
+        })
+        coinViewModel.logoutLiveData.observe(viewLifecycleOwner, EventObserver {
+            if (it){
+                val action = CoinHomeFragmentDirections.actionCoinHomeFragmentToUserAuthenticationGraph()
+                findNavController().navigate(action)
+            }
         })
 
         coinViewModel.screenStateLiveData.observe(viewLifecycleOwner, EventObserver {
@@ -80,5 +88,13 @@ class CoinHomeFragment : BaseFragment(),
             coinViewModel.filterCoins(it)
         }
         return false
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            binding.logoutButton -> {
+                coinViewModel.logout()
+            }
+        }
     }
 }

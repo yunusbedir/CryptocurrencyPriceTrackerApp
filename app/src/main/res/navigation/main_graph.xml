@@ -43,24 +43,31 @@
         </fragment>
         <action
             android:id="@+id/action_global_coinHomeFragment"
-            app:popUpToInclusive="true"
+            app:destination="@id/coinHomeFragment"
             app:launchSingleTop="true"
-            app:destination="@id/coinHomeFragment" />
+            app:popUpTo="@id/coinHomeFragment"
+            app:popUpToInclusive="true" />
     </navigation>
     <fragment
         android:id="@+id/coinHomeFragment"
         android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coinhome.CoinHomeFragment"
         android:label="fragment_coin_home"
-        tools:layout="@layout/fragment_coin_home" >
+        tools:layout="@layout/fragment_coin_home">
         <action
             android:id="@+id/action_coinHomeFragment_to_coinDetailFragment"
             app:destination="@id/coinDetailFragment" />
+        <action
+            android:id="@+id/action_coinHomeFragment_to_user_authentication_graph"
+            app:destination="@id/user_authentication_graph"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/user_authentication_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/coinDetailFragment"
         android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coindetail.CoinDetailFragment"
         android:label="fragment_coin_detail"
-        tools:layout="@layout/fragment_coin_detail" >
+        tools:layout="@layout/fragment_coin_detail">
         <argument
             android:name="id"
             app:argType="string" />

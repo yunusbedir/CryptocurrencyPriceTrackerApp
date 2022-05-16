@@ -8,11 +8,24 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/coin_search_view"
-        android:layout_width="match_parent"
+        app:layout_constraintEnd_toStartOf="@id/logout_button"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_height="wrap_content"
         app:defaultQueryHint="Search Here"
         app:layout_constraintTop_toTopOf="parent"
         app:queryHint="Search here" />
+
+    <View
+        android:id="@+id/logout_button"
+        android:layout_width="@dimen/dimension_image_small"
+        android:layout_height="@dimen/dimension_image_small"
+        android:clickable="true"
+        android:background="@drawable/ic_logout"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/coin_search_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/coin_list_recycler_view"
