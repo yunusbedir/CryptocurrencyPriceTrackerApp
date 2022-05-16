@@ -21,13 +21,13 @@
 ### Kayıt Ol Sayfası
 * Firebase ile kullanıcı kayıt ediliyor.
 
-![](https://github.com/yunusbedir/CryptocurrencyPriceTrackerApp/blob/master/screenshots/register.jpg)
+![](https://github.com/yunusbedir/CryptocurrencyPriceTrackerApp/blob/master/screenshots/register_now.jpg)
 
 
 ### Parolamaı Unuttum Sayfası
 * Fİrebase ile kulllanıcının parolasını sıfırlaması için email gönderiliyor.
 
-![](https://github.com/yunusbedir/CryptocurrencyPriceTrackerApp/blob/master/screenshots/foget_password.jpg)
+![](https://github.com/yunusbedir/CryptocurrencyPriceTrackerApp/blob/master/screenshots/fogot_password.jpg)
 
 
 ### Coin Ana Sayfası 
