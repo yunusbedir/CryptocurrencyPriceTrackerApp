@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentRegisterBinding
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.BaseFragment
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.UserAuthenticationViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
@@ -19,7 +20,7 @@ import com.yunusbedir.cryptocurrencypricetrackerapp.util.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment(),
+class RegisterFragment : BaseFragment(),
     View.OnClickListener {
 
     private val userAuthenticationViewModel: UserAuthenticationViewModel by hiltNavGraphViewModels(
@@ -52,9 +53,9 @@ class RegisterFragment : Fragment(),
             when (it) {
                 is ScreenState.ProgressState -> {
                     if (it.visibility) {
-
+                        showProgressView()
                     } else {
-
+                        dismissProgressView()
                     }
                 }
                 is ScreenState.ToastMessageState -> {

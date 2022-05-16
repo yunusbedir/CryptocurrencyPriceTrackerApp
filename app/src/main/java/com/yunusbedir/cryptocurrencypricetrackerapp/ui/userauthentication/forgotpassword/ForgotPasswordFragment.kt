@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentForgotPasswordBinding
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.BaseFragment
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.UserAuthenticationViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
@@ -19,12 +21,10 @@ import com.yunusbedir.cryptocurrencypricetrackerapp.util.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ForgotPasswordFragment : Fragment(),
+class ForgotPasswordFragment : BaseFragment(),
     View.OnClickListener {
 
-    private val userAuthenticationViewModel: UserAuthenticationViewModel by hiltNavGraphViewModels(
-        navGraphId = R.id.user_authentication_graph
-    )
+    private val userAuthenticationViewModel: UserAuthenticationViewModel by viewModels()
 
     private lateinit var binding: FragmentForgotPasswordBinding
 
@@ -57,9 +57,9 @@ class ForgotPasswordFragment : Fragment(),
             when (it) {
                 is ScreenState.ProgressState -> {
                     if (it.visibility) {
-
+                        showProgressView()
                     } else {
-
+                        dismissProgressView()
                     }
                 }
                 is ScreenState.ToastMessageState -> {

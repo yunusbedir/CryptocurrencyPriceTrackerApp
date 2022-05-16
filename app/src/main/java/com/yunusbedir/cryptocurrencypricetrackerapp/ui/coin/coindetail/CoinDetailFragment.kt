@@ -10,11 +10,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentCoinDetailBinding
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.BaseFragment
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.loadImage
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CoinDetailFragment : Fragment() {
+class CoinDetailFragment : BaseFragment() {
 
     private val coinDetailViewModel: CoinDetailViewModel by viewModels()
 
@@ -59,5 +63,20 @@ class CoinDetailFragment : Fragment() {
                 requireContext().getDrawable(R.drawable.ic_favorite_disable)
 
         }
+
+        coinDetailViewModel.screenStateLiveData.observe(viewLifecycleOwner, EventObserver {
+            when (it) {
+                is ScreenState.ProgressState -> {
+                    if (it.visibility) {
+                        showProgressView()
+                    } else {
+                        dismissProgressView()
+                    }
+                }
+                is ScreenState.ToastMessageState -> {
+                    requireContext().showLongToast(it.message)
+                }
+            }
+        })
     }
 }

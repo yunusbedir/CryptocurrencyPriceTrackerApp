@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.CoinRepository
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.firebase.FirebaseRepository
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.BaseViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,10 +17,7 @@ import javax.inject.Inject
 class UserAuthenticationViewModel @Inject constructor(
     private val firebaseRepository: FirebaseRepository,
     private val coinRepository: CoinRepository
-) : ViewModel() {
-
-    private val _screenStateLiveData = MutableLiveData<Event<ScreenState>>()
-    val screenStateLiveData: LiveData<Event<ScreenState>> = _screenStateLiveData
+) : BaseViewModel() {
 
     private val _loginLiveData = MutableLiveData<Event<Boolean>>()
     val loginLiveData: LiveData<Event<Boolean>> = _loginLiveData
