@@ -22,7 +22,6 @@
                 android:layout_width="@dimen/dimension_image_view"
                 android:layout_height="@dimen/dimension_image_view"
                 android:layout_margin="@dimen/text_margin"
-                android:src="@drawable/ic_currency"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +42,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:text="$12"
                 app:layout_constraintEnd_toStartOf="@id/favorite_button"
                 app:layout_constraintStart_toEndOf="@id/coin_icon_image_view"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -82,7 +80,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/text_margin"
-        android:text="12"
         app:layout_constraintBottom_toBottomOf="@id/price_change_percentage_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/price_change_percentage_label"
@@ -110,8 +107,7 @@
             android:id="@+id/description_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/text_margin"
-            android:text="@string/description" />
+            android:layout_marginHorizontal="@dimen/text_margin"/>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

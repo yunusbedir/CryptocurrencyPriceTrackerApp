@@ -55,6 +55,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/user_password_text_input_edit_text"
             android:layout_width="match_parent"
+            android:inputType="textPassword"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -71,6 +72,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/user_confirm_password_text_input_edit_text"
             android:layout_width="match_parent"
+            android:inputType="textPassword"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
