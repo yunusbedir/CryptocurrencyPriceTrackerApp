@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     private val navController by lazy {
         findNavController(R.id.nav_host_fragment)
     }
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             binding.toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
+            binding.progressContainer.visibility = View.GONE
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             when (destination.id) {
