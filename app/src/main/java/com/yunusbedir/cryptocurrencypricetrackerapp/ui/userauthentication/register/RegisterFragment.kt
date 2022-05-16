@@ -49,7 +49,7 @@ class RegisterFragment : BaseFragment(),
     }
 
     private fun initObservers() {
-        userAuthenticationViewModel.screenStateLiveData.observe(viewLifecycleOwner, EventObserver{
+        userAuthenticationViewModel.screenStateLiveData.observe(viewLifecycleOwner, EventObserver {
             when (it) {
                 is ScreenState.ProgressState -> {
                     if (it.visibility) {
@@ -63,6 +63,11 @@ class RegisterFragment : BaseFragment(),
                 }
             }
         })
+        userAuthenticationViewModel.registerLiveData.observe(viewLifecycleOwner, EventObserver {
+            if (it){
+                findNavController().navigateUp()
+            }
+        })
     }
 
     override fun onClick(v: View?) {
@@ -74,11 +79,11 @@ class RegisterFragment : BaseFragment(),
                 val email = binding.userEmailTextInputEditText.text.toString()
                 val password = binding.userPasswordTextInputEditText.text.toString()
                 val confirmPassword = binding.userConfirmPasswordTextInputEditText.text.toString()
-                if (password != confirmPassword){
+                if (password != confirmPassword) {
                     requireContext().showLongToast("Passwords are not the same")
                     return
                 }
-                if (requireContext().emailCheck(email) && requireContext().passwordCheck(password) ) {
+                if (requireContext().emailCheck(email) && requireContext().passwordCheck(password)) {
                     userAuthenticationViewModel.registerUser(email, password)
                 }
             }
