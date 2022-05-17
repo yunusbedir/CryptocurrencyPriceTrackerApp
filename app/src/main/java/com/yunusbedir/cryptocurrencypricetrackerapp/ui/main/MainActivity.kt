@@ -1,13 +1,9 @@
 package com.yunusbedir.cryptocurrencypricetrackerapp.ui.main
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -15,7 +11,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.ActivityMainBinding
-import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.UserAuthenticationViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     private fun initNavigationView() {
         val navView: BottomNavigationView = binding.navView
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_markets, R.id.navigation_dashboard, R.id.navigation_notifications))
+            R.id.navigation_markets, R.id.navigation_favorite, R.id.navigation_notifications))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

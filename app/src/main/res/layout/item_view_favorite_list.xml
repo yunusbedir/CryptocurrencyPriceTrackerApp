@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_horizontal_coin_list"
+    android:layout_marginVertical="@dimen/margin_vertical_coin_list"
+    android:clickable="true"
+    android:elevation="@dimen/elevation_list_item"
+    android:focusable="true"
+    app:cardCornerRadius="@dimen/radius_card_view">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding8">
+
+        <TextView
+            android:id="@+id/market_rank_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="4"
+            android:minEms="2"
+            tools:text="1234"
+            android:textSize="@dimen/small_font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/icon_image_view"
+            android:layout_width="@dimen/dimension_image_small"
+            android:layout_height="@dimen/dimension_image_small"
+            android:layout_marginStart="@dimen/margin_horizontal_between_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/market_rank_text_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_currency" />
+
+        <TextView
+            android:id="@+id/symbol_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_horizontal_between_view"
+            android:ems="7"
+            android:maxLines="2"
+            tools:text="@string/bitcoin"
+            android:textSize="@dimen/small_font_size"
+            app:layout_constraintBottom_toBottomOf="@id/icon_image_view"
+            app:layout_constraintStart_toEndOf="@id/icon_image_view"
+            app:layout_constraintTop_toTopOf="@id/icon_image_view" />
+
+        <TextView
+            android:id="@+id/current_price_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal_between_view"
+            android:ems="5"
+            android:gravity="center"
+            tools:text="12.2558,17$"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/last_24h_text_view"
+            app:layout_constraintStart_toEndOf="@id/symbol_text_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/last_24h_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+            tools:text="1000.0%"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

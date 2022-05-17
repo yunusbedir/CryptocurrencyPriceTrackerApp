@@ -12,19 +12,19 @@
         <fragment
             android:id="@+id/marketsFragment"
             android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.markets.MarketsFragment"
-            android:label="@string/title_home"
+            android:label="@string/markets"
             tools:layout="@layout/fragment_markets" />
     </navigation>
 
     <navigation
-        android:id="@+id/navigation_dashboard"
-        app:startDestination="@+id/dashboardFragment">
+        android:id="@+id/navigation_favorite"
+        app:startDestination="@+id/favoriteFragment">
 
         <fragment
-            android:id="@+id/dashboardFragment"
-            android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.dashboard.DashboardFragment"
-            android:label="@string/title_dashboard"
-            tools:layout="@layout/fragment_dashboard" />
+            android:id="@+id/favoriteFragment"
+            android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.favorite.FavoriteFragment"
+            android:label="@string/favorites"
+            tools:layout="@layout/fragment_favorite" />
     </navigation>
 
     <navigation
@@ -41,7 +41,6 @@
     <fragment
         android:id="@+id/coinDetailFragment"
         android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coindetail.CoinDetailFragment"
-        android:label="fragment_coin_detail"
         tools:layout="@layout/fragment_coin_detail">
         <argument
             android:name="id"

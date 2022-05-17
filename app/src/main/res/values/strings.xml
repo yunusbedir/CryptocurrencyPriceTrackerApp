@@ -18,4 +18,5 @@
     <string name="markets">Markets</string>
     <string name="search">Search</string>
     <string name="logout">Logout</string>
+    <string name="favorites">Favorites</string>
 </resources>
