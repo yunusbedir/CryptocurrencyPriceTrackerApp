@@ -1,9 +1,7 @@
-package com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coinhome
+package com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.markets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yunusbedir.cryptocurrencypricetrackerapp.callback.ListItemClickCallback

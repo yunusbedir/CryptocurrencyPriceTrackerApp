@@ -3,25 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_markets">
 
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+    <navigation
+        android:id="@+id/navigation_markets"
+        app:startDestination="@+id/marketsFragment">
 
-    <fragment
+        <fragment
+            android:id="@+id/marketsFragment"
+            android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.markets.MarketsFragment"
+            android:label="@string/title_home"
+            tools:layout="@layout/fragment_markets" />
+    </navigation>
+
+    <navigation
         android:id="@+id/navigation_dashboard"
-        android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        app:startDestination="@+id/dashboardFragment">
 
-    <fragment
+        <fragment
+            android:id="@+id/dashboardFragment"
+            android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.dashboard.DashboardFragment"
+            android:label="@string/title_dashboard"
+            tools:layout="@layout/fragment_dashboard" />
+    </navigation>
+
+    <navigation
         android:id="@+id/navigation_notifications"
-        android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        app:startDestination="@+id/notificationFragment">
+
+        <fragment
+            android:id="@+id/notificationFragment"
+            android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.notifications.NotificationsFragment"
+            android:label="@string/title_notifications"
+            tools:layout="@layout/fragment_notifications" />
+    </navigation>
 
     <fragment
         android:id="@+id/coinDetailFragment"
@@ -35,4 +50,7 @@
             android:name="title"
             app:argType="string" />
     </fragment>
+    <action
+        android:id="@+id/action_global_coinDetailFragment"
+        app:destination="@id/coinDetailFragment" />
 </navigation>

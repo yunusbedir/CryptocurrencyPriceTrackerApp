@@ -15,4 +15,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="markets">Markets</string>
+    <string name="search">Search</string>
+    <string name="logout">Logout</string>
 </resources>

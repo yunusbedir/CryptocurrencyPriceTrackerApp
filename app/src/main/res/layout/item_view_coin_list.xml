@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_card_view"
+    android:layout_marginHorizontal="@dimen/margin_horizontal_coin_list"
+    android:layout_marginVertical="@dimen/margin_vertical_coin_list"
     android:clickable="true"
     android:elevation="@dimen/elevation_list_item"
     android:focusable="true"
@@ -16,11 +17,10 @@
 
         <TextView
             android:id="@+id/symbol_text_view"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin8"
             android:text="@string/btc"
+            android:textSize="@dimen/middle_font_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,12 +28,10 @@
 
         <TextView
             android:id="@+id/name_text_view"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin8"
             android:text="@string/bitcoin"
-            android:textStyle="bold"
+            android:textSize="@dimen/small_font_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/symbol_text_view" />

@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentCoinDetailBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.BaseFragment
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.MainViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.loadImage
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.showLongToast
@@ -21,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CoinDetailFragment : BaseFragment() {
 
     private val coinDetailViewModel: CoinDetailViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     private val args by navArgs<CoinDetailFragmentArgs>()
 
@@ -38,7 +41,7 @@ class CoinDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initObserver()
         coinDetailViewModel.getCoinDetail(args.id)
-
+        mainViewModel.setToolbarVisibility(true)
         binding.favoriteButton.setOnClickListener {
             coinDetailViewModel.toggleFavorite()
         }

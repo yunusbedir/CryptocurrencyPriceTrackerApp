@@ -1,9 +1,13 @@
 package com.yunusbedir.cryptocurrencypricetrackerapp.ui.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -12,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.ActivityMainBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.UserAuthenticationViewModel
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,39 +36,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initToolbar()
         initNavigationView()
+        initObserver()
+    }
+
+    private fun initObserver() {
+        viewModel.toolbarVisibilityLiveData.observe(this, EventObserver {
+            binding.toolbar.visibility = if (it) View.VISIBLE else View.GONE
+        })
     }
 
     private fun initNavigationView() {
         val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+            R.id.navigation_markets, R.id.navigation_dashboard, R.id.navigation_notifications))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
     private fun initToolbar() {
         setSupportActionBar(binding.toolbar)
-        navController.addOnDestinationChangedListener { _, destination, args ->
-            binding.toolbar.setNavigationOnClickListener {
-                onBackPressed()
-            }
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            when (destination.id) {
-                R.id.loginFragment -> {
-                    title = getString(R.string.login)
-                    binding.toolbar.visibility = View.GONE
-                }
-                R.id.registerFragment -> {
-                    title = getString(R.string.register_now)
-                    binding.toolbar.visibility = View.VISIBLE
-                }
-                R.id.forgotPasswordFragment -> {
-                    title = getString(R.string.forget_password)
-                    binding.toolbar.visibility = View.VISIBLE
-                }
-            }
+        binding.toolbar.setNavigationOnClickListener {
+            navController.navigateUp()
         }
     }
 }
