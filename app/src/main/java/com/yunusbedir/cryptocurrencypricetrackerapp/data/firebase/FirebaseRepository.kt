@@ -19,8 +19,8 @@ class FirebaseRepository @Inject constructor(
     fun forgotPassword(email: String) =
         firebaseAuth.sendPasswordResetEmail(email)
 
-    fun updatePassword(password: String) =
-        firebaseAuth.currentUser?.updatePassword(password)
+    fun signOut() =
+        firebaseAuth.signOut()
 
     fun saveUser() =
         firebaseAuth.currentUser?.let {

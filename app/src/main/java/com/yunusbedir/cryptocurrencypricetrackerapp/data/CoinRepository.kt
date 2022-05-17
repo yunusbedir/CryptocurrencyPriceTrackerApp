@@ -59,4 +59,8 @@ class CoinRepository @Inject constructor(
             false
         }
     }
+
+    suspend fun clearCoinTable() = withContext(Dispatchers.IO) {
+        coinDao.deleteAllCoins()
+    }
 }

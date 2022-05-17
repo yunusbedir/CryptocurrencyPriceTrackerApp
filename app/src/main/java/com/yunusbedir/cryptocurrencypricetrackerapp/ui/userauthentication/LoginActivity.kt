@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
             if (it) {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         })
         viewModel.registerLiveData.observe(this, EventObserver {

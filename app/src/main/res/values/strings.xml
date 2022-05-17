@@ -19,4 +19,7 @@
     <string name="search">Search</string>
     <string name="logout">Logout</string>
     <string name="favorites">Favorites</string>
+    <string name="change_password">Change Password</string>
+    <string name="created_by_name">by Yunus Bedir</string>
+    <string name="user">User</string>
 </resources>

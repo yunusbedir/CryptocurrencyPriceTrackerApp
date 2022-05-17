@@ -19,4 +19,5 @@
     <dimen name="margin_horizontal_coin_list">2dp</dimen>
     <dimen name="margin_vertical_coin_list">2sp</dimen>
     <dimen name="margin_horizontal_between_view">4dp</dimen>
+    <dimen name="dimension_icon_x_large">200dp</dimen>
 </resources>
