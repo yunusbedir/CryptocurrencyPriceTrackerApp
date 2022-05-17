@@ -2,67 +2,27 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_graph"
-    app:startDestination="@id/user_authentication_graph">
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
 
-    <navigation
-        android:id="@+id/user_authentication_graph"
-        app:startDestination="@id/loginFragment">
-        <fragment
-            android:id="@+id/loginFragment"
-            android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.login.LoginFragment"
-            android:label="fragment_login"
-            app:launchSingleTop="true"
-            tools:layout="@layout/fragment_login">
-            <action
-                android:id="@+id/action_loginFragment_to_registerFragment"
-                app:destination="@id/registerFragment" />
-            <action
-                android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
-                app:destination="@id/forgotPasswordFragment" />
-        </fragment>
-        <fragment
-            android:id="@+id/registerFragment"
-            android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.register.RegisterFragment"
-            android:label="RegisterFragment"
-            tools:layout="@layout/fragment_register">
-            <argument
-                android:name="email"
-                android:defaultValue=""
-                app:argType="string" />
-        </fragment>
-        <fragment
-            android:id="@+id/forgotPasswordFragment"
-            android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.forgotpassword.ForgotPasswordFragment"
-            android:label="ForgotPasswordFragment"
-            tools:layout="@layout/fragment_forgot_password">
-            <argument
-                android:name="email"
-                android:defaultValue=""
-                app:argType="string" />
-        </fragment>
-        <action
-            android:id="@+id/action_global_coinHomeFragment"
-            app:destination="@id/coinHomeFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/coinHomeFragment"
-            app:popUpToInclusive="true" />
-    </navigation>
     <fragment
-        android:id="@+id/coinHomeFragment"
-        android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coinhome.CoinHomeFragment"
-        android:label="fragment_coin_home"
-        tools:layout="@layout/fragment_coin_home">
-        <action
-            android:id="@+id/action_coinHomeFragment_to_coinDetailFragment"
-            app:destination="@id/coinDetailFragment" />
-        <action
-            android:id="@+id/action_coinHomeFragment_to_user_authentication_graph"
-            app:destination="@id/user_authentication_graph"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/user_authentication_graph"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:id="@+id/navigation_home"
+        android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
     <fragment
         android:id="@+id/coinDetailFragment"
         android:name="com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coindetail.CoinDetailFragment"

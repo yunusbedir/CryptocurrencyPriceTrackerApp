@@ -50,8 +50,8 @@ class CoinHomeFragment : BaseFragment(),
         })
         coinViewModel.logoutLiveData.observe(viewLifecycleOwner, EventObserver {
             if (it){
-                val action = CoinHomeFragmentDirections.actionCoinHomeFragmentToUserAuthenticationGraph()
-                findNavController().navigate(action)
+               /* val action = CoinHomeFragmentDirections.actionCoinHomeFragmentToUserAuthenticationGraph()
+                findNavController().navigate(action)*/
             }
         })
 
@@ -71,12 +71,12 @@ class CoinHomeFragment : BaseFragment(),
         })
     }
 
-    override fun onItemClick(item: Coin) {
+    override fun onItemClick(item: Coin) {/*
         val action = CoinHomeFragmentDirections.actionCoinHomeFragmentToCoinDetailFragment(
             id = item.id,
             title = item.name ?: item.symbol ?: "Coin"
         )
-        findNavController().navigate(action)
+        findNavController().navigate(action)*/
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

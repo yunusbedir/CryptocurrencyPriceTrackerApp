@@ -10,7 +10,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.yunusbedir.cryptocurrencypricetrackerapp.MainActivity
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.LoginActivity
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.CoinRepository
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.CoinDetail
@@ -55,7 +55,7 @@ class FetchDataWorker @AssistedInject constructor(
     }
 
     private fun createNotification(response: CoinDetail) {
-        val notifyIntent = Intent(applicationContext, MainActivity::class.java).apply {
+        val notifyIntent = Intent(applicationContext, LoginActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         notifyIntent.putExtra(NOTIFICATION_EXTRA, true)

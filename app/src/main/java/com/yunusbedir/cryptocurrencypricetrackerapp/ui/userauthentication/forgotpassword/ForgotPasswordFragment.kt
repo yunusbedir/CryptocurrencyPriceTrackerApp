@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
@@ -24,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ForgotPasswordFragment : BaseFragment(),
     View.OnClickListener {
 
-    private val userAuthenticationViewModel: UserAuthenticationViewModel by viewModels()
+    private val userAuthenticationViewModel: UserAuthenticationViewModel by activityViewModels()
 
     private lateinit var binding: FragmentForgotPasswordBinding
 
@@ -44,29 +45,6 @@ class ForgotPasswordFragment : BaseFragment(),
         ).forEach {
             it.setOnClickListener(this)
         }
-        initObservers()
-    }
-
-    private fun initObservers() {
-        userAuthenticationViewModel.forgotPasswordLivedata.observe(viewLifecycleOwner, EventObserver{
-            if (it){
-                findNavController().navigateUp()
-            }
-        })
-        userAuthenticationViewModel.screenStateLiveData.observe(viewLifecycleOwner, EventObserver{
-            when (it) {
-                is ScreenState.ProgressState -> {
-                    if (it.visibility) {
-                        showProgressView()
-                    } else {
-                        dismissProgressView()
-                    }
-                }
-                is ScreenState.ToastMessageState -> {
-                    requireContext().showLongToast(it.message)
-                }
-            }
-        })
     }
 
     override fun onClick(v: View?) {
