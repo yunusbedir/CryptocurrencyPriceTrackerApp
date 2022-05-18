@@ -46,27 +46,14 @@ class MarketsFragment : Fragment(),
         binding.coinSearchView.setOnQueryTextListener(this)
         mainViewModel.setToolbarVisibility(false)
         initObserver()
+        mainViewModel.changeScreenState(ScreenState.ProgressState(true))
         marketsViewModel.filterCoins("")
     }
 
     private fun initObserver() {
         marketsViewModel.coinListLiveData.observe(viewLifecycleOwner, EventObserver {
+            mainViewModel.changeScreenState(ScreenState.ProgressState(false))
             coinListAdapter.submitList(it as MutableList<Coin>?)
-        })
-
-        marketsViewModel.screenStateLiveData.observe(viewLifecycleOwner, EventObserver {
-            when (it) {
-                is ScreenState.ProgressState -> {
-                    if (it.visibility) {
-                        //showProgressView()
-                    } else {
-                        //dismissProgressView()
-                    }
-                }
-                is ScreenState.ToastMessageState -> {
-                    requireContext().showLongToast(it.message)
-                }
-            }
         })
     }
 

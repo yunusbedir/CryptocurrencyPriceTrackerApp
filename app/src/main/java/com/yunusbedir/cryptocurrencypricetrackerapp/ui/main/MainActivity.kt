@@ -12,8 +12,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.ActivityMainBinding
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.LoginActivity
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.loadImageWithResource
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,8 +35,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initToolbar()
+        initViews()
         initNavigationView()
         initObserver()
+    }
+
+    private fun initViews() {
+        binding.loadingGifImageView.loadImageWithResource(R.raw.loading_gif)
     }
 
     private fun initObserver() {
@@ -42,9 +50,25 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.signOutLiveData.observe(this, EventObserver {
+            viewModel.changeScreenState(ScreenState.ProgressState(false))
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        })
+
+        viewModel.screenStateLiveData.observe(this, EventObserver {
+            when (it) {
+                is ScreenState.ProgressState -> {
+                    binding.progressContainer.visibility = when (it.visibility) {
+                        true -> View.VISIBLE
+                        else -> View.GONE
+                    }
+                }
+                is ScreenState.ToastMessageState -> {
+                    binding.progressContainer.visibility = View.GONE
+                    showLongToast(it.message)
+                }
+            }
         })
     }
 

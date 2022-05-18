@@ -11,16 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentCoinDetailBinding
-import com.yunusbedir.cryptocurrencypricetrackerapp.ui.BaseFragment
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.MainViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.loadImage
-import com.yunusbedir.cryptocurrencypricetrackerapp.util.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CoinDetailFragment : BaseFragment() {
+class CoinDetailFragment : Fragment(){
 
     private val coinDetailViewModel: CoinDetailViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -40,8 +38,9 @@ class CoinDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObserver()
-        coinDetailViewModel.getCoinDetail(args.id)
         mainViewModel.setToolbarVisibility(true)
+        mainViewModel.changeScreenState(ScreenState.ProgressState(true))
+        coinDetailViewModel.getCoinDetail(args.id)
         binding.favoriteButton.setOnClickListener {
             coinDetailViewModel.toggleFavorite()
         }
@@ -58,6 +57,8 @@ class CoinDetailFragment : BaseFragment() {
             binding.hashingTextView.text = coinDetail.hashing
             binding.priceChangePercentageTextView.text =
                 String.format("%.2f", coinDetail.marketData?.priceChangePercentage24h) + " %"
+
+            mainViewModel.changeScreenState(ScreenState.ProgressState(false))
         }
         coinDetailViewModel.isFavoriteLiveData.observe(viewLifecycleOwner) {
             binding.favoriteButton.background = if (it)
@@ -67,19 +68,5 @@ class CoinDetailFragment : BaseFragment() {
 
         }
 
-        coinDetailViewModel.screenStateLiveData.observe(viewLifecycleOwner, EventObserver {
-            when (it) {
-                is ScreenState.ProgressState -> {
-                    if (it.visibility) {
-                        showProgressView()
-                    } else {
-                        dismissProgressView()
-                    }
-                }
-                is ScreenState.ToastMessageState -> {
-                    requireContext().showLongToast(it.message)
-                }
-            }
-        })
     }
 }

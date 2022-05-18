@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.yunusbedir.cryptocurrencypricetrackerapp.callback.ListItemClickCallback
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.CoinDetail
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentFavoriteBinding
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coindetail.CoinDetailFragmentDirections
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.MainViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.markets.CoinListAdapter
@@ -49,13 +50,16 @@ class FavoriteFragment : Fragment(),
 
         initObserver()
 
+        mainViewModel.changeScreenState(ScreenState.ProgressState(true))
         favoriteViewModel.getMyFavoriteCoins()
     }
 
     private fun initObserver() {
         favoriteViewModel.favoriteListLiveData.observe(viewLifecycleOwner, EventObserver {
-            if (it.isNotEmpty())
+            if (it.isNotEmpty()){
                 favoriteListAdapter.submitList(it)
+            }
+            mainViewModel.changeScreenState(ScreenState.ProgressState(false))
         })
     }
 

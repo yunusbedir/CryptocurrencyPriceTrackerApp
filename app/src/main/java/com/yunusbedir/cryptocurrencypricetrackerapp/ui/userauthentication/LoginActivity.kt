@@ -6,11 +6,14 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.ActivityLoginBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.MainActivity
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.loadImage
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.loadImageWithResource
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,48 +25,46 @@ class LoginActivity : AppCompatActivity() {
         findNavController(R.id.nav_host_fragment_activity_login)
     }
 
-    private val viewModel: UserAuthenticationViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initViews()
         initToolbar()
         initObservers()
-        viewModel.autoLogin()
+        viewModel.changeScreenState(ScreenState.ProgressState(true))
+        viewModel.checkSignedIn()
+    }
+
+    private fun initViews() {
+        binding.loadingGifImageView.loadImageWithResource(R.raw.loading_gif)
     }
 
     private fun initObservers() {
         viewModel.loginLiveData.observe(this, EventObserver {
             if (it) {
+                viewModel.changeScreenState(ScreenState.ProgressState(false))
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         })
-        viewModel.registerLiveData.observe(this, EventObserver {
-            if (it) {
-                navController.navigateUp()
-            }
-        })
-        viewModel.forgotPasswordLivedata.observe(this, EventObserver {
-            if (it) {
-                navController.navigateUp()
-            }
-        })
+
         viewModel.screenStateLiveData.observe(this, EventObserver {
             when (it) {
                 is ScreenState.ProgressState -> {
-                    if (it.visibility) {
-                        binding.progressContainer.visibility =
+                    binding.progressContainer.visibility =
+                        if (it.visibility) {
                             View.VISIBLE
-                    } else {
-                        binding.progressContainer.visibility =
+                        } else {
                             View.GONE
-                    }
+                        }
                 }
                 is ScreenState.ToastMessageState -> {
+                    binding.progressContainer.visibility = View.GONE
                     showLongToast(it.message)
                 }
             }
@@ -76,7 +77,6 @@ class LoginActivity : AppCompatActivity() {
             binding.toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
-            binding.progressContainer.visibility = View.GONE
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             when (destination.id) {

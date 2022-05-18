@@ -3,8 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/activity_login.xml" value="0.3546875" />
-        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/activity_main.xml" value="0.19129082426127528" />
+        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/activity_login.xml" value="0.16005873715124816" />
+        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/activity_main.xml" value="0.39479166666666665" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_coin_detail.xml" value="0.3546875" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_coin_home.xml" value="0.33" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_coin_list.xml" value="0.3546875" />
@@ -16,9 +16,11 @@
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_markets.xml" value="0.325" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_notifications.xml" value="0.3546875" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_register.xml" value="0.25" />
+        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/fragment_user.xml" value="0.19739583333333333" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/item_view_coin_list.xml" value="0.5063469675599436" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/item_view_favorite_list.xml" value="0.4832869080779944" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/main_toolbar.xml" value="0.3546875" />
+        <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/layout/progress_layout.xml" value="0.29471228615863143" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3546875" />
         <entry key="..\:/MyProjects/CryptocurrencyPriceTrackerApp/app/src/main/res/menu/main_toolbar_menu.xml" value="0.3546875" />
       </map>

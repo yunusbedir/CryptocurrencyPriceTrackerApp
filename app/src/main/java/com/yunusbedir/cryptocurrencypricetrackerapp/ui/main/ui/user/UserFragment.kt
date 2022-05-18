@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentUserBinding
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.MainViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +44,7 @@ class UserFragment : Fragment(),
             if (it != null) {
                 binding.userEmailTextView.text = it.email
             } else {
+                mainViewModel.changeScreenState(ScreenState.ProgressState(true))
                 mainViewModel.signOutUser()
             }
         })
@@ -52,6 +54,7 @@ class UserFragment : Fragment(),
     override fun onClick(v: View?) {
         when (v) {
             binding.signOutButton -> {
+                mainViewModel.changeScreenState(ScreenState.ProgressState(true))
                 mainViewModel.signOutUser()
             }
         }

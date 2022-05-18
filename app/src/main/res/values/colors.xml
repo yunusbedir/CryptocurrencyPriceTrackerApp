@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#8E3D3D</color>
     <color name="textInputLayoutBackground">#979797</color>
+    <color name="progress_container_color">#2D979797</color>
 </resources>
