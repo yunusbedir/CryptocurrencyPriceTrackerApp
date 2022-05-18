@@ -44,9 +44,7 @@ class LoginFragment : Fragment(),
     override fun onClick(v: View?) {
         when (v) {
             binding.forgotPasswordTextView -> {
-                var email = binding.userEmailTextInputEditText.text.toString()
-                if (requireContext().emailCheck(email).not())
-                    email = ""
+                val email = binding.userEmailTextInputEditText.text.toString()
                 val action =
                     LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment(email)
                 findNavController().navigate(action)
@@ -61,9 +59,7 @@ class LoginFragment : Fragment(),
                 }
             }
             binding.registerButton -> {
-                var email = binding.userEmailTextInputEditText.text.toString()
-                if (requireContext().emailCheck(email).not())
-                    email = ""
+                val email = binding.userEmailTextInputEditText.text.toString()
                 val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment(email)
                 findNavController().navigate(action)
             }

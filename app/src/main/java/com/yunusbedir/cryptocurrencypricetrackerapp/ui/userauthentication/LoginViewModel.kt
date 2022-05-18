@@ -25,8 +25,8 @@ class LoginViewModel @Inject constructor(
     fun checkSignedIn() {
         if (firebaseRepository.getCurrentUser() != null) {
             _loginLiveData.postValue(Event(true))
-            changeScreenState(ScreenState.ProgressState(false))
         }
+        changeScreenState(ScreenState.ProgressState(false))
     }
 
     fun loginUser(email: String, password: String) {
