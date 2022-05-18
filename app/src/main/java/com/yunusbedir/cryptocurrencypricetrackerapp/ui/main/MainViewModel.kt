@@ -40,4 +40,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun syncCoinDetail() {
+
+    }
+
 }

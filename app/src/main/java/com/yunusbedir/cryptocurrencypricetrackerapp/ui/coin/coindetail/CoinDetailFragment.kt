@@ -2,6 +2,7 @@ package com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coindetail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +19,26 @@ import com.yunusbedir.cryptocurrencypricetrackerapp.util.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CoinDetailFragment : Fragment(){
+class CoinDetailFragment : Fragment() {
 
     private val coinDetailViewModel: CoinDetailViewModel by viewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
 
     private val args by navArgs<CoinDetailFragmentArgs>()
+
+    private val updateCurrentPriceInterval = 10000L
+    private var updateCurrentPriceHandler: Handler? = null
+
+    var updateCurrentPriceRunnable: Runnable = object : Runnable {
+        override fun run() {
+            try {
+                coinDetailViewModel.updateCoinCurrentPrice()
+            } finally {
+                updateCurrentPriceHandler?.postDelayed(this, updateCurrentPriceInterval)
+            }
+        }
+    }
+
 
     private lateinit var binding: FragmentCoinDetailBinding
     override fun onCreateView(
@@ -38,6 +53,8 @@ class CoinDetailFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObserver()
+        updateCurrentPriceHandler = Handler()
+        updateCurrentPriceRunnable.run()
         mainViewModel.setToolbarVisibility(true)
         mainViewModel.changeScreenState(ScreenState.ProgressState(true))
         coinDetailViewModel.getCoinDetail(args.id)
@@ -67,6 +84,15 @@ class CoinDetailFragment : Fragment(){
                 requireContext().getDrawable(R.drawable.ic_favorite_disable)
 
         }
+        coinDetailViewModel.currentPriceLiveData.observe(viewLifecycleOwner, EventObserver {
+            binding.currentPriceTextView.text =
+                "$${String.format("%.4f", it)}"
+        })
 
+    }
+
+    override fun onDestroy() {
+        updateCurrentPriceHandler?.removeCallbacks(updateCurrentPriceRunnable)
+        super.onDestroy()
     }
 }

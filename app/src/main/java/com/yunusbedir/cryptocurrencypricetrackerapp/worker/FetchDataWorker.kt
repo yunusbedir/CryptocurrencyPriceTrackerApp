@@ -36,7 +36,6 @@ class FetchDataWorker @AssistedInject constructor(
             coinRepository.getFavoriteCoinList().await().documents.forEach { document ->
                 document.toCoinDetail()?.let {
                     val response = coinRepository.getCoinDetail(it.id)
-                    Log.i("MY_TAG", "response: $response")
                     if (
                         (it.marketData?.currentPrice ?: 0) != (response.marketData?.currentPrice
                             ?: 0)
@@ -45,9 +44,7 @@ class FetchDataWorker @AssistedInject constructor(
                         createNotification(response)
                     }
                 }
-                Log.i("MY_TAG", "document: $document")
             }
-            Log.i("MY_TAG", "aaaaaaaaaaaaaaaaaaaa")
         } catch (e: Exception) {
             return Result.retry()
         }

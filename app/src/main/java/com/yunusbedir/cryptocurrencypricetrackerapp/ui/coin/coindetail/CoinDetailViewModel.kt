@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.CoinRepository
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.CoinDetail
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -15,6 +16,9 @@ import javax.inject.Inject
 class CoinDetailViewModel @Inject constructor(
     private val coinRepository: CoinRepository
 ) : ViewModel() {
+
+    private val _currentPriceLiveData = MutableLiveData<Event<Double>>()
+    val currentPriceLiveData: LiveData<Event<Double>> = _currentPriceLiveData
 
     private val _coinDetailLiveData = MutableLiveData<CoinDetail>()
     val coinDetailLiveData: LiveData<CoinDetail> = _coinDetailLiveData
@@ -59,6 +63,19 @@ class CoinDetailViewModel @Inject constructor(
             deleteCoinFavorite()
         } else {
             addCoinFavorite()
+        }
+    }
+
+    fun updateCoinCurrentPrice() {
+        viewModelScope.launch {
+            try {
+                _coinDetailLiveData.value?.let { coinDetail ->
+                    coinRepository.getCoinDetail(coinDetail.id).marketData?.currentPrice?.usd?.let { price ->
+                        _currentPriceLiveData.postValue(Event(price))
+                    }
+                }
+            } catch (e: Exception) {
+            }
         }
     }
 }

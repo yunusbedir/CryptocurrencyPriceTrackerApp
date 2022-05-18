@@ -36,8 +36,10 @@ class FavoriteListAdapter(private val listItemCLickCallback: ListItemClickCallba
             binding.symbolTextView.text = item.symbol
             item.image?.url?.let { binding.iconImageView.loadImage(it) }
             binding.last24hTextView.text =
-                "${item.marketData?.priceChangePercentage24h.toString()}%"
-            binding.currentPriceTextView.text = "$${item.marketData?.currentPrice?.usd.toString()}"
+                String.format("%.2f", item.marketData?.priceChangePercentage24h) + " %"
+            binding.currentPriceTextView.text =
+                "$${String.format("%.4f", item.marketData?.currentPrice?.usd ?: "")}"
+
 
             binding.root.setOnClickListener {
                 listItemCLickCallback.onItemClick(item)
