@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.Resource
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentCoinDetailBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.MainViewModel
@@ -56,7 +57,6 @@ class CoinDetailFragment : Fragment() {
         updateCurrentPriceHandler = Handler()
         updateCurrentPriceRunnable.run()
         mainViewModel.setToolbarVisibility(true)
-        mainViewModel.changeScreenState(ScreenState.ProgressState(true))
         coinDetailViewModel.getCoinDetail(args.id)
         binding.favoriteButton.setOnClickListener {
             coinDetailViewModel.toggleFavorite()
@@ -65,18 +65,30 @@ class CoinDetailFragment : Fragment() {
 
     @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
     private fun initObserver() {
-        coinDetailViewModel.coinDetailLiveData.observe(viewLifecycleOwner) { coinDetail ->
-            binding.descriptionTextView.text = coinDetail.description?.en ?: ""
-            coinDetail.image?.url?.let { it1 -> binding.coinIconImageView.loadImage(it1) }
-            binding.symbolTextView.text = coinDetail.symbol
-            binding.currentPriceTextView.text =
-                "$${String.format("%.4f", coinDetail.marketData?.currentPrice?.usd ?: "")}"
-            binding.hashingTextView.text = coinDetail.hashing
-            binding.priceChangePercentageTextView.text =
-                String.format("%.2f", coinDetail.marketData?.priceChangePercentage24h) + " %"
+        coinDetailViewModel.coinDetailLiveData.observe(viewLifecycleOwner, EventObserver { resource ->
+            when (resource) {
+                is Resource.LoadingResource -> {
+                    mainViewModel.changeScreenState(ScreenState.ProgressState(true))
+                }
+                is Resource.SuccessResource -> {
+                    mainViewModel.changeScreenState(ScreenState.ProgressState(false))
+                    binding.descriptionTextView.text = resource.data.description?.en ?: ""
+                    resource.data.image?.url?.let { it1 -> binding.coinIconImageView.loadImage(it1) }
+                    binding.symbolTextView.text = resource.data.symbol
+                    binding.currentPriceTextView.text =
+                        "$${String.format("%.4f", resource.data.marketData?.currentPrice?.usd ?: "")}"
+                    binding.hashingTextView.text = resource.data.hashing
+                    binding.priceChangePercentageTextView.text =
+                        String.format("%.2f", resource.data.marketData?.priceChangePercentage24h) + " %"
 
-            mainViewModel.changeScreenState(ScreenState.ProgressState(false))
-        }
+                    mainViewModel.changeScreenState(ScreenState.ProgressState(false))
+                }
+                is Resource.FailedResource -> {
+                    val message = resource.error.message ?: "Can not found Coin detail!"
+                    mainViewModel.changeScreenState(ScreenState.ToastMessageState(message))
+                }
+            }
+        })
         coinDetailViewModel.isFavoriteLiveData.observe(viewLifecycleOwner) {
             binding.favoriteButton.background = if (it)
                 requireContext().getDrawable(R.drawable.ic_favorite_enable)

@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.yunusbedir.cryptocurrencypricetrackerapp.R
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.Resource
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.Coin
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.ActivityLoginBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.MainActivity
@@ -35,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
         initViews()
         initToolbar()
         initObservers()
-        viewModel.changeScreenState(ScreenState.ProgressState(true))
         viewModel.checkSignedIn()
     }
 
@@ -44,12 +45,21 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        viewModel.loginLiveData.observe(this, EventObserver {
-            if (it) {
-                viewModel.changeScreenState(ScreenState.ProgressState(false))
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+        viewModel.loginLiveData.observe(this, EventObserver { resource ->
+            when (resource) {
+                is Resource.LoadingResource -> {
+                    viewModel.changeScreenState(ScreenState.ProgressState(true))
+                }
+                is Resource.SuccessResource -> {
+                    viewModel.changeScreenState(ScreenState.ProgressState(false))
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                is Resource.FailedResource -> {
+                    val message = resource.error.message ?: "Login failed!"
+                    viewModel.changeScreenState(ScreenState.ToastMessageState(message))
+                }
             }
         })
 

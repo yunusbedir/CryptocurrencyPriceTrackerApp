@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.signOutLiveData.observe(this, EventObserver {
-            viewModel.changeScreenState(ScreenState.ProgressState(false))
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()

@@ -1,15 +1,14 @@
 package com.yunusbedir.cryptocurrencypricetrackerapp.data
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.local.dao.CoinDao
-import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.Coin
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.CoinDetail
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.remote.service.CoinGeckoService
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.FirebaseConstants.COLLECTION_FAVORITES
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.FirebaseConstants.COLLECTION_USERS
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

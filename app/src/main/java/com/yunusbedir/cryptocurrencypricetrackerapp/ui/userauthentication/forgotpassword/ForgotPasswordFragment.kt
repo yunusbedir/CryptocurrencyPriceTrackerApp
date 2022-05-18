@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.Resource
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentForgotPasswordBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.LoginViewModel
@@ -44,12 +45,19 @@ class ForgotPasswordFragment : Fragment(),
     }
 
     private fun initObserver() {
-        forgotPasswordFragmentViewModel.forgotPasswordLivedata.observe(this, EventObserver {
-            if (it) {
-                loginViewModel.changeScreenState(ScreenState.ToastMessageState("Password reset email sent."))
-                findNavController().navigateUp()
-            } else {
-                loginViewModel.changeScreenState(ScreenState.ToastMessageState("Failed to send password reset email!"))
+        forgotPasswordFragmentViewModel.forgotPasswordLivedata.observe(this, EventObserver { resource ->
+            when (resource) {
+                is Resource.LoadingResource -> {
+                    loginViewModel.changeScreenState(ScreenState.ProgressState(true))
+                }
+                is Resource.SuccessResource -> {
+                    loginViewModel.changeScreenState(ScreenState.ProgressState(false))
+                    findNavController().navigateUp()
+                }
+                is Resource.FailedResource -> {
+                    val message = resource.error.message ?: "Failed to send password reset email!"
+                    loginViewModel.changeScreenState(ScreenState.ToastMessageState(message))
+                }
             }
         })
     }

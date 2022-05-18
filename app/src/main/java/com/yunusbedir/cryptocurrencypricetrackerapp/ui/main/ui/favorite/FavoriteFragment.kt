@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.yunusbedir.cryptocurrencypricetrackerapp.callback.ListItemClickCallback
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.Resource
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.CoinDetail
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentFavoriteBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
@@ -19,6 +20,7 @@ import com.yunusbedir.cryptocurrencypricetrackerapp.ui.coin.coindetail.CoinDetai
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.MainViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.ui.markets.CoinListAdapter
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
+import com.yunusbedir.cryptocurrencypricetrackerapp.util.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,16 +52,24 @@ class FavoriteFragment : Fragment(),
 
         initObserver()
 
-        mainViewModel.changeScreenState(ScreenState.ProgressState(true))
         favoriteViewModel.getMyFavoriteCoins()
     }
 
     private fun initObserver() {
-        favoriteViewModel.favoriteListLiveData.observe(viewLifecycleOwner, EventObserver {
-            if (it.isNotEmpty()){
-                favoriteListAdapter.submitList(it)
+        favoriteViewModel.favoriteListLiveData.observe(viewLifecycleOwner, EventObserver { resource ->
+            when (resource) {
+                is Resource.LoadingResource -> {
+                    mainViewModel.changeScreenState(ScreenState.ProgressState(true))
+                }
+                is Resource.SuccessResource -> {
+                    mainViewModel.changeScreenState(ScreenState.ProgressState(false))
+                    favoriteListAdapter.submitList(resource.data)
+                }
+                is Resource.FailedResource -> {
+                    val message = resource.error.message ?: "Can not found  Favorite Coin list!"
+                    mainViewModel.changeScreenState(ScreenState.ToastMessageState(message))
+                }
             }
-            mainViewModel.changeScreenState(ScreenState.ProgressState(false))
         })
     }
 

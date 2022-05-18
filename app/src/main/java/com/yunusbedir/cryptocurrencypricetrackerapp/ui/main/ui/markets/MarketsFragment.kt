@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yunusbedir.cryptocurrencypricetrackerapp.callback.ListItemClickCallback
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.Resource
 import com.yunusbedir.cryptocurrencypricetrackerapp.data.model.Coin
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentMarketsBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
@@ -46,14 +47,24 @@ class MarketsFragment : Fragment(),
         binding.coinSearchView.setOnQueryTextListener(this)
         mainViewModel.setToolbarVisibility(false)
         initObserver()
-        mainViewModel.changeScreenState(ScreenState.ProgressState(true))
         marketsViewModel.filterCoins("")
     }
 
     private fun initObserver() {
-        marketsViewModel.coinListLiveData.observe(viewLifecycleOwner, EventObserver {
-            mainViewModel.changeScreenState(ScreenState.ProgressState(false))
-            coinListAdapter.submitList(it as MutableList<Coin>?)
+        marketsViewModel.coinListLiveData.observe(viewLifecycleOwner, EventObserver { resource ->
+            when (resource) {
+                is Resource.LoadingResource -> {
+                    mainViewModel.changeScreenState(ScreenState.ProgressState(true))
+                }
+                is Resource.SuccessResource -> {
+                    mainViewModel.changeScreenState(ScreenState.ProgressState(false))
+                    coinListAdapter.submitList(resource.data as MutableList<Coin>?)
+                }
+                is Resource.FailedResource -> {
+                    val message = resource.error.message ?: "Can not found Coin list!"
+                    mainViewModel.changeScreenState(ScreenState.ToastMessageState(message))
+                }
+            }
         })
     }
 

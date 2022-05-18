@@ -1,5 +1,6 @@
 package com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.register
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.yunusbedir.cryptocurrencypricetrackerapp.data.Resource
 import com.yunusbedir.cryptocurrencypricetrackerapp.databinding.FragmentRegisterBinding
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.ScreenState
+import com.yunusbedir.cryptocurrencypricetrackerapp.ui.main.MainActivity
 import com.yunusbedir.cryptocurrencypricetrackerapp.ui.userauthentication.LoginViewModel
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.EventObserver
 import com.yunusbedir.cryptocurrencypricetrackerapp.util.emailCheck
@@ -46,12 +49,19 @@ class RegisterFragment : Fragment(),
     }
 
     private fun initObserver() {
-        registerFragmentViewModel.registerLiveData.observe(this, EventObserver {
-            if (it) {
-                loginViewModel.changeScreenState(ScreenState.ToastMessageState("User register is success"))
-                findNavController().navigateUp()
-            } else {
-                loginViewModel.changeScreenState(ScreenState.ToastMessageState("User register is failed!"))
+        registerFragmentViewModel.registerLiveData.observe(this, EventObserver { resource ->
+            when (resource) {
+                is Resource.LoadingResource -> {
+                    loginViewModel.changeScreenState(ScreenState.ProgressState(true))
+                }
+                is Resource.SuccessResource -> {
+                    loginViewModel.changeScreenState(ScreenState.ProgressState(false))
+                    findNavController().navigateUp()
+                }
+                is Resource.FailedResource -> {
+                    val message = resource.error.message ?: "Can not registered user!"
+                    loginViewModel.changeScreenState(ScreenState.ToastMessageState(message))
+                }
             }
         })
     }
@@ -70,7 +80,6 @@ class RegisterFragment : Fragment(),
                     return
                 }
                 if (requireContext().emailCheck(email) && requireContext().passwordCheck(password)) {
-                    loginViewModel.changeScreenState(ScreenState.ProgressState(true))
                     registerFragmentViewModel.registerUser(email, password)
                 }
             }
