@@ -16,6 +16,8 @@
 * UseCase
 * Flow
 * DataBinding
+* UI Test
+* Unit Test
 
 Favori Coin'in ücreti arkaplanda workmanager kullanılarak periyodik olarak kontrol edilir eğer favorideki coinlerden birinin ücreti değişmiş ise bildirim oluşturuluyor. 
 
