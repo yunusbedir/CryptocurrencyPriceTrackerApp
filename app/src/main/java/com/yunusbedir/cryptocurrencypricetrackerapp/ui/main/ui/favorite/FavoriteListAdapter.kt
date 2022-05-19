@@ -35,10 +35,16 @@ class FavoriteListAdapter(private val listItemCLickCallback: ListItemClickCallba
             binding.marketRankTextView.text = item.marketCapRank
             binding.symbolTextView.text = item.symbol
             item.image?.url?.let { binding.iconImageView.loadImage(it) }
-            binding.last24hTextView.text =
-                String.format("%.2f", item.marketData?.priceChangePercentage24h) + " %"
-            binding.currentPriceTextView.text =
-                "$${String.format("%.4f", item.marketData?.currentPrice?.usd ?: "")}"
+            try {
+                binding.last24hTextView.text =
+                    String.format("%.2f", item.marketData?.priceChangePercentage24h) + " %"
+            } catch (e: Exception) {
+            }
+            try {
+                binding.currentPriceTextView.text =
+                    "$${String.format("%.4f", item.marketData?.currentPrice?.usd ?: "")}"
+            } catch (e: Exception) {
+            }
 
 
             binding.root.setOnClickListener {
